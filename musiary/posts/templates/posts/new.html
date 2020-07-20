@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block style %}
+        <link rel="stylesheet" href="{% static 'posts/style.css' %}" type="text/css" />
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <h1>내 글 작성하기</h1>
+        
+        <form action="{% url 'posts:create' %}" method="POST">
+            {% csrf_token %}
+            <h2>음악</h2>
+            <input type="text" name="song" />
+            <button class="btn btn-dark btn-sm" type="submit">Search</button>
+
+            
+            <h2>태그</h2>
+            <input type="text" name="tag" />
+            
+            <h2>본문</h2>
+            <textarea cols=40 rows=10 name="body"></textarea>
+            
+            <br>
+            <input type="submit" value="작성하기" />
+        </form>
+        
+    </div>
+{% endblock %}

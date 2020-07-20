@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block style %}
+        <link rel="stylesheet" href="{% static 'posts/style.css' %}" type="text/css" />
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <h1>내 글 수정하기</h1>
+        
+        <form action="{% url 'posts:update' post.id %}" method="POST">
+            {% csrf_token %}
+            
+            <h2>음악</h2>
+            <input type="text" name="song" value="{{ post.song }}" />
+            
+            <h2>태그</h2>
+            <input type="text" name="tag" value="{{ post.tag }}" />
+            
+            <h2>본문</h2>
+            <textarea cols=40 rows=10 name="body">{{ post.body }}</textarea>
+            
+            <br>
+            <input type="submit" value="저장" />
+        </form>
+        
+    </div>
+{% endblock %}

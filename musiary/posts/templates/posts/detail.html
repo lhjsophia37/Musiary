@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block style %}
+        <link rel="stylesheet" href="{% static 'posts/style.css' %}" type="text/css" />
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>History</h1>
+        {% if post %}
+            <div>{{ post.created_at }}</div>
+            
+            <h2>음악</h2>
+            <p>{{ post.song }}</p>
+            
+            <h2>태그</h2>
+            <p>{{ post.tag }}</p>
+            
+            <h2>본문</h2>
+            <p>{{ post.body }}</p>
+        {% else %}
+            <p>No posts.</p>
+        {% endif %}
+        
+        <div>
+            likes : {{ post.liked_users.count }}
+        </div>
+        
+        {% if user.is_authenticated %}
+            {% if user in post.liked_users.all %}
+                <form action="{% url 'posts:like' post.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">like</button>
+                </form>
+            {% else %}
+                <form action="{% url 'posts:like' post.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-secondary">like</button>
+                </form>
+            {% endif %}
+        {% endif %}
+        
+        {% if user == post.user %}
+            <a href="{% url 'posts:edit' post.id %}">수정하기</a>
+            <a href="{% url 'posts:delete' post.id %}">삭제하기</a>
+        {% endif%}
+        
+    </div>
+{% endblock %}
